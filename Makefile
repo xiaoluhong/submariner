@@ -3,6 +3,7 @@ version ?= 1.14.2
 logging ?= false
 kubefed ?= false
 deploytool ?= helm
+armada ?= true
 debug ?= false
 
 TARGETS := $(shell ls scripts | grep -v dapper-image)
@@ -17,8 +18,8 @@ TARGETS := $(shell ls scripts | grep -v dapper-image)
 dapper-image: .dapper
 	./.dapper -m bind dapper-image
 
-$(TARGETS): .dapper dapper-image
-	DAPPER_ENV="OPERATOR_IMAGE"  ./.dapper -m bind $@ $(status) $(version) $(logging) $(kubefed) $(deploytool) $(debug)
+$(TARGETS): .dapper
+	DAPPER_ENV="OPERATOR_IMAGE"  ./.dapper -m bind $@ $(status) $(version) $(logging) $(kubefed) $(deploytool) $(armada) $(debug)
 
 .DEFAULT_GOAL := ci
 
